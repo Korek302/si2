@@ -15,6 +15,12 @@ namespace si2
             LatinSquare instance = new LatinSquare(N);
             instance.Backtracking();
             instance.ShowSquare();
+
+            Console.WriteLine();
+
+            LatinSquare fcInstance = new LatinSquare(N);
+            fcInstance.Forwardchecking();
+            fcInstance.ShowSquare();
         }
     }
 }
