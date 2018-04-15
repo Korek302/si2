@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LatinSquare.cs" />
+    <Compile Include="LatinSquareBT.cs" />
+    <Compile Include="LatinSquareFC.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace si2
 {
@@ -12,15 +8,16 @@ namespace si2
         {
             const int N = 5;
 
-            LatinSquare instance = new LatinSquare(N);
-            instance.Backtracking();
-            instance.ShowSquare();
+            LatinSquareBT btInstance = new LatinSquareBT(N);
+            btInstance.Backtracking();
+            btInstance.ShowSquare();
 
             Console.WriteLine();
 
-            LatinSquare fcInstance = new LatinSquare(N);
+            LatinSquareFC fcInstance = new LatinSquareFC(N);
             fcInstance.Forwardchecking();
             fcInstance.ShowSquare();
+        
         }
     }
 }
