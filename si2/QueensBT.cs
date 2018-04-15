@@ -60,6 +60,7 @@ namespace si2
         public void Backtracking()
         {
             init();
+            int counter = 0;
             for (int i = 0; i < _n; i++)
             {
                 for (int j = 0; j < _n; j++)
@@ -77,7 +78,8 @@ namespace si2
                     }
                     else
                     {
-                        if (i == _n - 1 && j == _n - 1)
+                        counter++;
+                        if (i == _n - 1 && j == _n - counter)
                         {
                             i = _queens.Last().Item1;
                             j = _queens.Last().Item2;
@@ -110,6 +112,22 @@ namespace si2
                                 temp1--;
                                 temp2 = _n - 1;
                             }
+
+                            if(j == _n - 1)
+                            {
+                                j = 0;
+                                i++;
+                                if(i >= _n)
+                                {
+                                    Console.WriteLine("brak rozwiazan");
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                j++;
+                            }
+
                             if(temp1 == 0 && temp2 == 0)
                             {
                                 Console.WriteLine("Brak rozwiazan");
