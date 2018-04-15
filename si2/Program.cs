@@ -6,9 +6,9 @@ namespace si2
     {
         static void Main(string[] args)
         {
-            const int N = 5;
+            const int N = 6;
 
-            LatinSquareBT btInstance = new LatinSquareBT(N);
+            /*LatinSquareBT btInstance = new LatinSquareBT(N);
             btInstance.Backtracking();
             btInstance.ShowSquare();
 
@@ -16,7 +16,12 @@ namespace si2
 
             LatinSquareFC fcInstance = new LatinSquareFC(N);
             fcInstance.Forwardchecking();
-            fcInstance.ShowSquare();
+            fcInstance.ShowSquare();*/
+
+            QueensBT btQueens = new QueensBT(N);
+
+            btQueens.Backtracking();
+            btQueens.ShowSquare();
         
         }
     }

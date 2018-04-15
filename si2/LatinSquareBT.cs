@@ -63,30 +63,35 @@ namespace si2
                         {
                             if (k == _n)
                             {
-                                _square[i, j] = 0;
-                                if (j == 0)
+                                do
                                 {
-                                    if (i == 0)
+                                    _square[i, j] = 0;
+                                    if (j == 0)
                                     {
-                                        Console.WriteLine("Brak rozwiazan");
-                                        i = _n;
-                                        j = _n;
-                                        k = _n + 1;
+                                        if (i == 0)
+                                        {
+                                            Console.WriteLine("Brak rozwiazan");
+                                            i = _n;
+                                            j = _n;
+                                            k = _n + 1;
+                                        }
+                                        else
+                                        {
+                                            i--;
+                                            j = _n - 1;
+                                        }
                                     }
                                     else
                                     {
-                                        i--;
-                                        j = _n - 1;
+                                        j--;
                                     }
+                                    k = _square[i, j];
                                 }
-                                else
-                                {
-                                    j--;
-                                }
-                                k = _square[i, j];
+                                while(k >= _n);
                             }
                         }
                     }
+                    //ShowSquare();
                 }
             }
         }

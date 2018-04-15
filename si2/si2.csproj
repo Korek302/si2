@@ -47,6 +47,8 @@
     <Compile Include="LatinSquareFC.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queens.cs" />
+    <Compile Include="QueensBT.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
