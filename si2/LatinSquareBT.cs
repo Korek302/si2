@@ -62,7 +62,7 @@ namespace si2
                         else
                         {
                             if (k == _n)
-                            {
+                            {//nawrot
                                 do
                                 {
                                     _square[i, j] = 0;

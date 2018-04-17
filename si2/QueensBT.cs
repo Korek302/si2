@@ -60,7 +60,8 @@ namespace si2
         public void Backtracking()
         {
             init();
-            int counter = 0;
+            int backCounterJ = 0;
+            int backCounterI = 0;
             for (int i = 0; i < _n; i++)
             {
                 for (int j = 0; j < _n; j++)
@@ -75,68 +76,29 @@ namespace si2
                             j = _n;
                             break;
                         }
+                        backCounterJ = 1;
+                        backCounterI = 1;
                     }
                     else
                     {
-                        counter++;
-                        if (i == _n - 1 && j == _n - counter)
-                        {
-                            i = _queens.Last().Item1;
-                            j = _queens.Last().Item2;
-                            _queens.RemoveAt(_queens.Count - 1);
-                            _square[i, j] = 0;
-                        }
-                        if (i == _n - 1 && j == _n - 2)
-                        {
-                            i = _queens.Last().Item1;
-                            j = _queens.Last().Item2;
-                            _queens.RemoveAt(_queens.Count - 1);
-                            _square[i, j] = 0;
-                        }
-
-                        int temp1 = _n - 1;
-                        int temp2 = _n - 1;
-                        while(i == temp1 && j == temp2)
-                        {
+                        while(i == _n - 1 && j == _n - backCounterJ)
+                        {//nawrot
                             i = _queens.Last().Item1;
                             j = _queens.Last().Item2;
                             _queens.RemoveAt(_queens.Count - 1);
                             _square[i, j] = 0;
 
-                            if(temp2 > 0)
+                            if(backCounterJ == _n - 1)
                             {
-                                temp2--;
+                                backCounterI++;
+                                backCounterJ = 1;
                             }
                             else
                             {
-                                temp1--;
-                                temp2 = _n - 1;
-                            }
-
-                            if(j == _n - 1)
-                            {
-                                j = 0;
-                                i++;
-                                if(i >= _n)
-                                {
-                                    Console.WriteLine("brak rozwiazan");
-                                    break;
-                                }
-                            }
-                            else
-                            {
-                                j++;
-                            }
-
-                            if(temp1 == 0 && temp2 == 0)
-                            {
-                                Console.WriteLine("Brak rozwiazan");
-                                break;
+                                backCounterJ++;
                             }
                         }
                     }
-                    
-                    //ShowSquare();
                 }
             }
         }

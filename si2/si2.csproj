@@ -49,6 +49,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queens.cs" />
     <Compile Include="QueensBT.cs" />
+    <Compile Include="QueensFC.cs" />
+    <Compile Include="TupleComparer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

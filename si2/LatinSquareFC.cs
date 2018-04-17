@@ -65,11 +65,21 @@ namespace si2
             }
             if (currJ < _n - 1)
             {
+                bool ok = true;
                 for (int j = currJ + 1; j < _n; j++)
                 {
-
-                    _domains[new Tuple<int, int>(currI, j)].Add(val);
-                    _domains[new Tuple<int, int>(currI, j)].Sort();
+                    for(int k = 0; k < _n; k++)
+                    {
+                        if(_square[k, j] == val)
+                        {
+                            ok = false;
+                        }
+                    }
+                    if (ok)
+                    {
+                        _domains[new Tuple<int, int>(currI, j)].Add(val);
+                        _domains[new Tuple<int, int>(currI, j)].Sort();
+                    }
                 }
             }
 
@@ -102,36 +112,33 @@ namespace si2
                     trimDomains(i, j, _square[i, j]);
 
                     if (isEmptyDomains())
-                    {
+                    {//nawrot
                         restoreDomains(i, j, _square[i, j]);
                         currDomainId++;
-                        if (currDomainId >= _domains[new Tuple<int, int>(i, j)].Count)
+                        while(currDomainId >= _domains[new Tuple<int, int>(i, j)].Count)
                         {
-                            do
+                            _square[i, j] = 0;
+                            if (j == 0)
                             {
-                                _square[i, j] = 0;
-                                if (j == 0)
+                                if (i == 0)
                                 {
-                                    if (i == 0)
-                                    {
-                                        Console.WriteLine("Brak rozwiazan");
-                                        i = _n;
-                                        j = _n;
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        i--;
-                                        j = _n - 1;
-                                    }
+                                    Console.WriteLine("Brak rozwiazan");
+                                    i = _n;
+                                    j = _n;
+                                    break;
                                 }
                                 else
                                 {
-                                    j--;
+                                    i--;
+                                    j = _n - 1;
                                 }
-                                currDomainId = _domains[new Tuple<int, int>(i, j)].IndexOf(_square[i, j]) + 1;
-                                restoreDomains(i, j, _square[i, j]);
-                            } while (currDomainId >= _domains[new Tuple<int, int>(i, j)].Count);
+                            }
+                            else
+                            {
+                                j--;
+                            }
+                            currDomainId = _domains[new Tuple<int, int>(i, j)].IndexOf(_square[i, j]) + 1;
+                            restoreDomains(i, j, _square[i, j]);
                         }
 
                         if (j == 0)
