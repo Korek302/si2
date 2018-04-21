@@ -60,6 +60,7 @@ namespace si2
         public void Backtracking()
         {
             init();
+            int relapseCounter = 0;
             int backCounterJ = 0;
             int backCounterI = 0;
             for (int i = 0; i < _n; i++)
@@ -97,10 +98,12 @@ namespace si2
                             {
                                 backCounterJ++;
                             }
+                            relapseCounter++;
                         }
                     }
                 }
             }
+            Console.WriteLine("Relapses: " + relapseCounter);
         }
     }
 }

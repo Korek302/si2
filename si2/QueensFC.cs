@@ -93,6 +93,24 @@ namespace si2
             }
         }
 
+        private void seizeSpotsLeastConstraining(int rowId, int colId)
+        {
+            for (int i = 0; i < _n; i++)
+            {
+                _freeSpots.Remove(new Tuple<int, int>(i, colId));
+                _freeSpots.Remove(new Tuple<int, int>(rowId, i));
+            }
+            foreach (Tuple<int, int> t in getDiagIds1(rowId, colId))
+            {
+                _freeSpots.Remove(t);
+            }
+            foreach (Tuple<int, int> t in getDiagIds2(rowId, colId))
+            {
+                _freeSpots.Remove(t);
+            }
+            _freeSpots.Sort(new TupleComparerLeastConstraining(_freeSpots));
+        }
+
         private void freeSpots(int rowId, int colId)
         {
             for (int i = 0; i < _n; i++)
@@ -118,25 +136,32 @@ namespace si2
             _freeSpots.Sort(new TupleComparer());
         }
 
-        private void relapse1(int n)
+        private void freeSpotsLeastConstraining(int rowId, int colId)
         {
-            Tuple<int, int> temp = _queens[_queens.Count - 1];
-            _square[_queens[_queens.Count - 1].Item1, _queens[_queens.Count - 1].Item2] = 0;
-            _queens.RemoveAt(_queens.Count - 1);
-            freeSpots(temp.Item1, temp.Item2);
-            
-            if (_freeSpots.Count > 1)
+            for (int i = 0; i < _n; i++)
             {
-                _queens.Add(_freeSpots[n]);
-                _square[_freeSpots[n].Item1, _freeSpots[n].Item2] = 1;
+                _freeSpots.Add(new Tuple<int, int>(rowId, i));
+                if (i != rowId)
+                {
+                    _freeSpots.Add(new Tuple<int, int>(i, colId));
+                }
             }
-            else
+            foreach (Tuple<int, int> t in getDiagIds1(rowId, colId))
             {
-                relapse1(n + 1);
+                _freeSpots.Add(t);
             }
+            foreach (Tuple<int, int> t in getDiagIds2(rowId, colId))
+            {
+                _freeSpots.Add(t);
+            }
+            foreach (Tuple<int, int> t in _queens)
+            {
+                seizeSpots(t.Item1, t.Item2);
+            }
+            _freeSpots.Sort(new TupleComparerLeastConstraining(_freeSpots));
         }
 
-        private void relapse(out Tuple<int, int> currSpot, out int freeSpotId)
+        private void relapse(out Tuple<int, int> currSpot, out int freeSpotId, ref int relapseCounter)
         {
             currSpot = _queens[_queens.Count - 1];
             _queens.RemoveAt(_queens.Count - 1);
@@ -152,14 +177,36 @@ namespace si2
             }
             else
             {
-                relapse(out currSpot, out freeSpotId);
+                relapse(out currSpot, out freeSpotId, ref relapseCounter);
+            }
+            relapseCounter++;
+        }
+
+        private void relapseLeastConstraining(out Tuple<int, int> currSpot, out int freeSpotId)
+        {
+            currSpot = _queens[_queens.Count - 1];
+            _queens.RemoveAt(_queens.Count - 1);
+            _square[currSpot.Item1, currSpot.Item2] = 0;
+            freeSpotsLeastConstraining(currSpot.Item1, currSpot.Item2);
+
+            freeSpotId = _freeSpots.IndexOf(currSpot) + 1;
+
+            if (freeSpotId < _freeSpots.Count)
+            {
+                currSpot = _freeSpots[freeSpotId];
+                seizeSpotsLeastConstraining(currSpot.Item1, currSpot.Item2);
+            }
+            else
+            {
+                relapseLeastConstraining(out currSpot, out freeSpotId);
             }
         }
 
         public void Forwardchecking()
         {
             init();
-            while(_queens.Count < _n)
+            int relapseCounter = 0;
+            while (_queens.Count < _n)
             {
                 Tuple<int, int> currSpot = _freeSpots[0];
 
@@ -177,12 +224,47 @@ namespace si2
                     }
                     else
                     {
-                        relapse(out currSpot, out freeSpotId);
+                        relapse(out currSpot, out freeSpotId, ref relapseCounter);
                     }
+                    relapseCounter++;
                 }
                 _queens.Add(currSpot);
                 _square[currSpot.Item1, currSpot.Item2] = 1;
             }
+            Console.WriteLine("Relapses: " + relapseCounter);
+        }
+
+        public void ForwardcheckingLeastConstraining()
+        {
+            init();
+            int relapseCounter = 0;
+            while (_queens.Count < _n)
+            {
+                Tuple<int, int> currSpot = _freeSpots[0];
+
+                seizeSpotsLeastConstraining(currSpot.Item1, currSpot.Item2);
+
+                int freeSpotId = 1;
+                while (!_freeSpots.Any() && _queens.Count != _n - 1)
+                {//nawrot
+                    freeSpots(currSpot.Item1, currSpot.Item2);
+                    if (freeSpotId < _freeSpots.Count)
+                    {
+                        currSpot = _freeSpots[freeSpotId];
+                        seizeSpots(currSpot.Item1, currSpot.Item2);
+                        freeSpotId++;
+                    }
+                    else
+                    {
+                        relapse(out currSpot, out freeSpotId, ref relapseCounter);
+                    }
+                    relapseCounter++;
+                }
+                _queens.Add(currSpot);
+                _square[currSpot.Item1, currSpot.Item2] = 1;
+                _freeSpots.Sort(new TupleComparerLeastConstraining(_freeSpots));
+            }
+            Console.WriteLine("Relapses: " + relapseCounter);
         }
     }
 }

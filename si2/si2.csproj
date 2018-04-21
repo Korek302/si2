@@ -51,6 +51,7 @@
     <Compile Include="QueensBT.cs" />
     <Compile Include="QueensFC.cs" />
     <Compile Include="TupleComparer.cs" />
+    <Compile Include="TupleComparerLeastConstraining.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -103,6 +103,7 @@ namespace si2
         public void Forwardchecking()
         {
             init();
+            int relapseCounter = 0;
             int currDomainId = 0;
             for (int i = 0; i < _n; i++)
             {
@@ -139,6 +140,7 @@ namespace si2
                             }
                             currDomainId = _domains[new Tuple<int, int>(i, j)].IndexOf(_square[i, j]) + 1;
                             restoreDomains(i, j, _square[i, j]);
+                            relapseCounter++;
                         }
 
                         if (j == 0)
@@ -167,6 +169,7 @@ namespace si2
                     }
                 }
             }
+            Console.WriteLine("Relapses: " + relapseCounter);
         }
     }
 }
