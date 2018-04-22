@@ -7,7 +7,7 @@ namespace si2
     {
         static void Main(string[] args)
         {
-            const int N = 6;
+            const int N = 7;
 
             Stopwatch sw = new Stopwatch();
 
@@ -41,15 +41,15 @@ namespace si2
 
             Console.WriteLine();
 
-            sw.Reset();
+            /*sw.Reset();
             Console.WriteLine("Latin Square BT MostConstrained");
             sw.Start();
-            btInstance.BacktrackingMostConstrained();
+            btInstance.BacktrackingMostConnected();
             sw.Stop();
             Console.WriteLine("Time: " + sw.ElapsedMilliseconds);
             btInstance.ShowSquare();
 
-            Console.WriteLine();
+            Console.WriteLine();*/
 
             LatinSquareFC fcInstance = new LatinSquareFC(N);
             sw.Reset();

@@ -45,7 +45,7 @@ namespace si2
             return true;
         }
 
-        private Tuple<int, int> mostConstrainedVar()
+        private Tuple<int, int> mostConnectedVar()
         {
             int counterMax = 0;
             Tuple<int, int> out1 = new Tuple<int, int>(0, 0);
@@ -214,7 +214,7 @@ namespace si2
             Console.WriteLine("Relapses: " + relapseCounter);
         }
 
-        public void BacktrackingMostConstrained()
+        public void BacktrackingMostConnected()
         {
             init();
             int relapseCounter = 0;
@@ -229,7 +229,7 @@ namespace si2
             }
             while (varList.Any())
             {
-                Tuple<int, int> currVarCoords = mostConstrainedVar();
+                Tuple<int, int> currVarCoords = mostConnectedVar();
                 int i = currVarCoords.Item1;
                 int j = currVarCoords.Item2;
                 for (int k = 1; k < _n + 1; k++)

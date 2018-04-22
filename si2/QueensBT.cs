@@ -82,7 +82,7 @@ namespace si2
                     }
                     else
                     {
-                        while(i == _n - 1 && j == _n - backCounterJ)
+                        while(i == _n - backCounterI && j == _n - backCounterJ)
                         {//nawrot
                             i = _queens.Last().Item1;
                             j = _queens.Last().Item2;
