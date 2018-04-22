@@ -7,7 +7,7 @@ namespace si2
     {
         static void Main(string[] args)
         {
-            const int N = 7;
+            const int N = 10;
 
             Stopwatch sw = new Stopwatch();
 
